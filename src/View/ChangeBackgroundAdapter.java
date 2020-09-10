@@ -5,19 +5,22 @@ import Controller.WindowController;
 import java.awt.event.MouseAdapter;
 import Model.PosJPanel;
 import java.awt.Color;
+import Model.Node;
 
 public class ChangeBackgroundAdapter extends MouseAdapter{
 
     PosJPanel panel;
+    Node[][] nodeMatrix;
 
     public ChangeBackgroundAdapter(PosJPanel panel) {
         this.panel = panel;
+        //nodeMatrix = WindowController.getDijkstraGridPanel().getNodeMatrix();
     }
 
     public void mouseClicked(MouseEvent event){
         // Sets the start point if the start point has not been set yet
         if (!WindowController.getDijkstraGridPanel().isStartPointSet()){
-            panel.setBackground(new Color(0, 0, 0));
+            panel.setBackground(WindowController.getStartPointColor());
             WindowController.getDijkstraGridPanel().setStartPointSet(true);
             // Also saves the coordinates of the start point for later use
             WindowController.setStartPointRow(panel.getRow());
@@ -28,8 +31,8 @@ public class ChangeBackgroundAdapter extends MouseAdapter{
         }
 
         // Sets the end point if the end point has not been set yet (set after start point)
-        if (!WindowController.getDijkstraGridPanel().isEndPointSet()){
-            panel.setBackground(new Color(255, 255, 255));
+        if (!WindowController.getDijkstraGridPanel().isEndPointSet() && panel.getBackground() != WindowController.getStartPointColor()){
+            panel.setBackground(WindowController.getEndPointColor());
             WindowController.getDijkstraGridPanel().setEndPointSet(true);
             // Also saves the coordinates of the end point for later use
             WindowController.setEndPointRow(panel.getRow());
@@ -55,9 +58,10 @@ public class ChangeBackgroundAdapter extends MouseAdapter{
         // Only changes background color if the background color is still the original color
         if (panel.getBackground() == WindowController.getMainPanelColor()) {
             if (WindowController.getDijkstraGridPanel().isMouseIsPressed() && WindowController.getDijkstraGridPanel().isEndPointSet()) {
-                panel.setBackground(new Color(0, 0, 255));
+                panel.setBackground(WindowController.getObstacleColor());
             }
         }
+        
     }
 
 }

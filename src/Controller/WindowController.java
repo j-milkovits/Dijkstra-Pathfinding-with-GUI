@@ -11,7 +11,11 @@ public class WindowController {
     
     private static Dimension screenSize;
     private static int gridSize = 100; 
-    private static Color mainPanelColor = new Color(0, 255, 0);
+    private static Color mainPanelColor = new Color(231, 111, 81);
+    private static Color startPointColor = new Color(38, 70, 83);
+    private static Color endPointColor = new Color(42, 157, 143);
+    private static Color obstacleColor = new Color(0, 0, 0);
+    private static Color pathColor = new Color(244, 162, 97);
     private static Node[][] nodeMatrix;
     private static int startPointRow;
     private static int startPointColumn;
@@ -103,5 +107,20 @@ public class WindowController {
         return dijkstraControlPanel;
     }
 
-    
+    public static Color getStartPointColor() {
+        return startPointColor;
+    }
+
+    public static Color getEndPointColor() {
+        return endPointColor;
+    }
+
+    public static Color getObstacleColor() {
+        return obstacleColor;
+    }
+
+    public static Color getPathColor() {
+        return pathColor;
+    }
+
 }

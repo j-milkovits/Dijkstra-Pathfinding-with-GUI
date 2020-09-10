@@ -14,6 +14,8 @@ public class Node {
     private int column;
     private Hashtable<Node, Double> neighbors;
     private PosJPanel panel;
+    private Node predecessor;
+    private double distance;
 
     /**
      * constructor to create object of type node
@@ -25,6 +27,9 @@ public class Node {
         this.row = row;
         this.column = column;
         this.panel = panel;
+        this.predecessor = null;
+        this.distance = Integer.MAX_VALUE;
+
     }
 
 
@@ -55,5 +60,21 @@ public class Node {
 
     public PosJPanel getPanel() {
         return panel;
+    }
+
+    public Node getPredecessor() {
+        return predecessor;
+    }
+
+    public void setPredecessor(Node predecessor) {
+        this.predecessor = predecessor;
+    }
+
+    public double getDistance() {
+        return distance;
+    }
+
+    public void setDistance(double distance) {
+        this.distance = distance;
     }
 }

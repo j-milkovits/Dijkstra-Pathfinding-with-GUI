@@ -2,11 +2,13 @@ package View;
 
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.util.ArrayList;
+import java.util.Hashtable;
 import javax.swing.JPanel;
 import Controller.WindowController;
 import Model.Node;
 import Model.PosJPanel;
-import java.util.Hashtable;
+import Model.Dijkstra;
 
 public class DijkstraGridPanel extends JPanel {
     
@@ -49,6 +51,14 @@ public class DijkstraGridPanel extends JPanel {
     }
 
     
+    public void startDijkstra(){
+        // Saving all the neighbors of each node in their "neighbors" attribute
+        fetchNeighbors();
+
+        Dijkstra.startDijkstra();
+
+    }
+
     public void fetchNeighbors() {
         // Iterates over whole nodeMatrix to set the neighbors for each node
         for (int row = 0; row < nodeMatrix.length; row++){
@@ -62,8 +72,8 @@ public class DijkstraGridPanel extends JPanel {
                     for (int x = column - 1; x <= column + 1; x++){
                         // Check if the coordinates we're looking at are still in the matrix
                         if (withinMatrixBounds(y, x)){
-                            // Check if the color is still the original one (it's not an obstacle)
-                            if (originalColorCheck(y, x)) {
+                            // Check if the color is not the obstacle color
+                            if (nodeMatrix[y][x].getColor() != WindowController.getObstacleColor()) {
                                 // Checks if the current node is not our "source" node
                                 if (x != column || y != row) {
                                     // If it's either purely vertical or purely horizontal the distance should be 1
@@ -72,7 +82,12 @@ public class DijkstraGridPanel extends JPanel {
                                     }
                                     // If it's diagonal to the source node, the distance should be 1.44
                                     else {
-                                        neighbors.put(nodeMatrix[y][x], Math.sqrt(2));
+                                        Color obstacleColor = WindowController.getObstacleColor();
+                                        if (y < row && x < column) {
+                                            if (nodeMatrix[y][column].getColor() != obstacleColor && nodeMatrix[row][x].getColor() != obstacleColor){
+                                                neighbors.put(nodeMatrix[y][x], (double) 1);
+                                            }       
+                                        } 
                                     }
                                 }
                             }
@@ -81,20 +96,10 @@ public class DijkstraGridPanel extends JPanel {
                 }
             }
         }
-
-        System.out.println(nodeMatrix[0][0].getNeighbors());
-
     }
 
     private boolean withinMatrixBounds(int y, int x){
         if (x >= 0 && y >= 0 && x < gridSize && y < gridSize) {
-            return true;
-        }
-        return false;
-    }
-
-    private boolean originalColorCheck(int y, int x){
-        if (nodeMatrix[y][x].getColor() == WindowController.getMainPanelColor()){
             return true;
         }
         return false;
@@ -137,6 +142,10 @@ public class DijkstraGridPanel extends JPanel {
 
     public void setEndPointSet(boolean endPointSet) {
        this.endPointSet = endPointSet;
+    }
+
+    public Node[][] getNodeMatrix() {
+        return nodeMatrix;
     }
 
 }
