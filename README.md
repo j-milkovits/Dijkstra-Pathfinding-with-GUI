@@ -1,6 +1,5 @@
 # General information
 ## State of the program
-- I will add a jar soon
 - Logic is done, not that pretty tho
 - Would like to add different path finding algorithms (A*, Bellmann-Ford, ...)
 - I'd also like the improve the code and visuals
