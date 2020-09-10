@@ -83,11 +83,9 @@ public class DijkstraGridPanel extends JPanel {
                                     // If it's diagonal to the source node, the distance should be 1.44
                                     else {
                                         Color obstacleColor = WindowController.getObstacleColor();
-                                        if (y < row && x < column) {
-                                            if (nodeMatrix[y][column].getColor() != obstacleColor && nodeMatrix[row][x].getColor() != obstacleColor){
-                                                neighbors.put(nodeMatrix[y][x], (double) 1);
-                                            }       
-                                        } 
+                                        if (nodeMatrix[y][column].getColor() != obstacleColor && nodeMatrix[row][x].getColor() != obstacleColor){
+                                            neighbors.put(nodeMatrix[y][x], Math.sqrt(2));
+                                        }  
                                     }
                                 }
                             }

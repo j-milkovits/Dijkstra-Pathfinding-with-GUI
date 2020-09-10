@@ -45,6 +45,7 @@ public class DijkstraControlPanel extends JPanel {
 
         startButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event){
+                startButton.setEnabled(false);
                 WindowController.getDijkstraGridPanel().startDijkstra();
             }
         });

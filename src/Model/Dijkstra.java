@@ -1,10 +1,11 @@
 package Model;
 
+import java.awt.Color;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.PriorityQueue;
 import java.util.Set;
 import Controller.WindowController;
-import java.awt.Color;
 
 public class Dijkstra {
 
@@ -37,8 +38,6 @@ public class Dijkstra {
 
         Node endNode = nodeMatrix[endRow][endColumn];
 
-        System.out.println(endNode.getDistance());
-
         drawPath(startNode, endNode);
     }
 
@@ -51,19 +50,22 @@ public class Dijkstra {
                 temp.setColor(pathColor);
                 temp = temp.getPredecessor();
             }
-        }        
+            
+            DecimalFormat df = new DecimalFormat("#.##");
+            String dist = df.format(endNode.getDistance());
+            WindowController.getDijkstraControlPanel().setText("The distance from start to end is: " + dist + ". Press Reset to try again!");
+        }
+        else {
+            WindowController.getDijkstraControlPanel().setText("Your points can't be connected, please reset and try again!");
+        }
     }
  
     public static void runDijkstra(PriorityQueue<Node> queue){
         while (queue.peek() != null){
-            //System.out.println("Taking new node");
-            //System.out.println();
             Node minNode = queue.poll();
             Set<Node> neighborNodes = minNode.getNeighbors().keySet();
 
             for(Node currentNode : neighborNodes){
-                //System.out.println("minNode: row: " + minNode.getRow() + " column: " + minNode.getColumn() + " distance: " + minNode.getDistance());
-                //System.out.println("currentNode: row: " + currentNode.getRow() + " column: " + currentNode.getColumn() + " distance: " + currentNode.getDistance());
                 relax(minNode, currentNode, queue);
             }
         }
@@ -71,13 +73,9 @@ public class Dijkstra {
     }
 
     public static void relax(Node start, Node end, PriorityQueue<Node> queue){
-        //System.out.println();
         if (end.getDistance() > start.getDistance() + start.getNeighbors().get(end)){
-            //System.out.println("Updated distance");
             end.setDistance(start.getDistance() + start.getNeighbors().get(end));
             end.setPredecessor(start);
-            //System.out.println(end.getDistance());
-            //System.out.println();
             queue.remove(end);
             queue.add(end);
         }
