@@ -5,7 +5,7 @@ Simple program that finds the shortest path between two points with any obstacle
 1. Download jar file from releases
 2. Run jar file (Java installation recommended)
 3. Set two points by clicking twice, draw any pattern you want and press Start!
-![Demo](https://imgur.com/a/TPwBecI)
+![Demo](https://i.imgur.com/1SSLGGx.gif)
 
 
 # Purpose
